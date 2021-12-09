@@ -4,10 +4,22 @@ import scala.annotation.tailrec
 
 object Day8 extends Problem {
 
-  type Digit = Set[Char]
+  case class Digit(d: Int, size: Int) {
+    def &(that: Digit): Digit = {
+      val value = that.d & d
+      var _d = value
+      var length = 0
+      while (_d != 0) {
+        length += _d & 1
+        _d >>= 1
+      }
+
+      Digit(value, length)
+    }
+  }
 
   case class Display(usp: Vector[Digit], digits: Vector[Digit]) {
-    lazy val decoder: Map[Digit, Int] = {
+    def decoder: Map[Digit, Int] = {
       @tailrec
       def decode(remaningUsp: Vector[Digit], table: Map[Digit, Int], rtable: Map[Int, Digit]): Map[Digit, Int] = {
         if (remaningUsp.isEmpty)
@@ -22,15 +34,15 @@ object Day8 extends Problem {
               decode(remaningUsp.tail, table.updated(digit, 4), rtable.updated(4, digit))
             case digit if digit.size == 7 =>
               decode(remaningUsp.tail, table.updated(digit, 8), rtable.updated(8, digit))
-            case digit if rtable.contains(4) && rtable.contains(8) && rtable(4).intersect(digit) == rtable(4) =>
+            case digit if rtable.contains(4) && rtable.contains(8) && (rtable(4) & digit) == rtable(4) =>
               decode(remaningUsp.tail, table.updated(digit, 9), rtable.updated(9, digit))
-            case digit if rtable.contains(1) && rtable.contains(9) && digit.size == 6 && rtable(1).intersect(digit) == rtable(1) =>
+            case digit if rtable.contains(1) && rtable.contains(9) && digit.size == 6 && (rtable(1) & digit) == rtable(1) =>
               decode(remaningUsp.tail, table.updated(digit, 0), rtable.updated(0, digit))
             case digit if rtable.contains(0) && rtable.contains(9) && digit.size == 6 =>
               decode(remaningUsp.tail, table.updated(digit, 6), rtable.updated(6, digit))
-            case digit if rtable.contains(6) && rtable(6).intersect(digit) == digit && digit.size == 5 =>
+            case digit if rtable.contains(6) && (rtable(6) & digit) == digit && digit.size == 5 =>
               decode(remaningUsp.tail, table.updated(digit, 5), rtable.updated(5, digit))
-            case digit if rtable.contains(1) && rtable(1).intersect(digit) == rtable(1) && digit.size == 5 =>
+            case digit if rtable.contains(1) && (rtable(1) & digit) == rtable(1) && digit.size == 5 =>
               decode(remaningUsp.tail, table.updated(digit, 3), rtable.updated(3, digit))
             case digit if rtable.size == 9 =>
               decode(remaningUsp.tail, table.updated(digit, 2), rtable.updated(2, digit))
@@ -43,15 +55,36 @@ object Day8 extends Problem {
       decode(usp, Map(), Map())
     }
 
-    lazy val content: Int = digits
+    def content: Int = digits
       .map(decoder)
       .foldLeft(0)((acc, n) => acc * 10 + n)
   }
 
   def parseDisplay(input: String): Display = {
-    val parts = input.split('|')
-    Display(parts(0).split(' ').filterNot(_.isBlank).map(_.toSet).toVector,
-      parts(1).split(' ').filterNot(_.isBlank).map(_.toSet).toVector)
+    val Array(usp, digits) = input.split('|')
+    Display(usp.split(' ')
+      .filterNot(_.isBlank)
+      .map(parseDigit)
+      .toVector,
+      digits.split(' ')
+        .filterNot(_.isBlank)
+        .map(parseDigit)
+        .toVector)
+  }
+
+  private def parseDigit(x: String): Digit = {
+    val d = x.map {
+      case 'a' => 1 << 0
+      case 'b' => 1 << 1
+      case 'c' => 1 << 2
+      case 'd' => 1 << 3
+      case 'e' => 1 << 4
+      case 'f' => 1 << 5
+      case 'g' => 1 << 6
+    }
+      .foldLeft(0)((acc, n) => acc | n)
+
+    Digit(d, x.length)
   }
 
   def parseLines(input: String): Vector[Display] = {
@@ -67,7 +100,6 @@ object Day8 extends Problem {
       .map(_.digits.count(x => Set(2, 3, 4, 7).contains(x.size)))
       .sum
       .toString
-
 
   override def solveSecondPart(input: String): String =
     parseLines(input)

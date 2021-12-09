@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-import com.github.netfalo.aoc2021.Day8.Display
+import com.github.netfalo.aoc2021.Day8.{Digit, Display}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
@@ -23,9 +23,8 @@ class Day8Spec extends AnyFlatSpec {
 
   "Day 8" should "parse display" in {
     val input = "acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab |cdfeb fcadb cdfeb cdbaf"
-    val usp = Vector("acedgfb", "cdfbe", "gcdfa", "fbcad", "dab", "cefabd", "cdfgeb", "eafb", "cagedb", "ab")
-      .map(_.toSet)
-    val digits = Vector("cdfeb", "fcadb", "cdfeb", "cdbaf").map(_.toSet)
+    val usp = Vector(Digit(127,7), Digit(62,5), Digit(109,5), Digit(47,5), Digit(11,3), Digit(63,6), Digit(126,6), Digit(51,4), Digit(95,6), Digit(3,2))
+    val digits = Vector(Digit(62,5), Digit(47,5), Digit(62,5), Digit(47,5))
     val expected = Display(usp, digits)
 
     Day8.parseDisplay(input) shouldEqual expected
