@@ -44,6 +44,13 @@ object Timer {
   }
 
   def timeN[R](prefix: String, block: => R, n: Int): R = {
+    val (result, avg) = timeNX(block, n)
+    val p = if (prefix.isBlank) "" else prefix + " "
+    log.info(s"${p}${if (p.isEmpty) "A" else "a"}verage execution time after $n executions: $avg")
+    result
+  }
+
+  def timeNX[R](block: => R, n: Int): (R, PrettyDuration) = {
     @tailrec
     def timeNRec(block: => R, n: Int, durations: List[Long]): (R, List[Long]) = {
       val (result, duration) = timeP(block)
@@ -54,8 +61,8 @@ object Timer {
       }
     }
     val (result, durations) = timeNRec(block, n, List())
-    val p = if (prefix.isBlank) "" else prefix + " "
-    log.info(s"${p}${if (p.isEmpty) "A" else "a"}verage execution time after $n executions: ${PrettyDuration(Duration(durations.sum * 1.0 / durations.length, NANOSECONDS))}")
-    result
+
+    val avg = durations.sum * 1.0 / durations.length
+    (result, PrettyDuration(Duration(avg, NANOSECONDS)))
   }
 }
