@@ -2,6 +2,7 @@ package com.github.netfalo.aoc2021
 
 import com.typesafe.scalalogging.Logger
 
+import java.util.concurrent.TimeUnit
 import scala.annotation.tailrec
 import scala.concurrent.duration.{Duration, NANOSECONDS}
 
@@ -21,7 +22,28 @@ object Timer {
     (result, t1 - t0)
   }
 
+  case class PrettyDuration(d: Duration) {
+    override def toString: String = {
+      @tailrec
+      def toString(duration: Duration, str: Vector[String]): String = duration match {
+        case d if d.toHours > 0 => toString(d - Duration(d.toHours, TimeUnit.HOURS), str.appended(s"${d.toHours}h"))
+        case d if d.toMinutes > 0 => toString(d - Duration(d.toMinutes, TimeUnit.MINUTES), str.appended(s"${d.toMinutes}m"))
+        case d if d.toSeconds > 0 => toString(d - Duration(d.toSeconds, TimeUnit.SECONDS), str.appended(s"${d.toSeconds}s"))
+        case d if d.toMillis > 0 => toString(d - Duration(d.toMillis, TimeUnit.MILLISECONDS), str.appended(s"${d.toMillis}ms"))
+        case d if d.toMicros > 0 => toString(d - Duration(d.toMicros, TimeUnit.MICROSECONDS), str.appended(s"${d.toMicros}us"))
+        case d if d.toNanos > 0 => toString(d - Duration(d.toNanos, TimeUnit.NANOSECONDS), str.appended(s"${d.toNanos}ns"))
+        case _ => str mkString " "
+      }
+
+      toString(d, Vector())
+    }
+  }
+
   def timeN[R](block: => R, n: Int): R = {
+    timeN("", block, n)
+  }
+
+  def timeN[R](prefix: String, block: => R, n: Int): R = {
     @tailrec
     def timeNRec(block: => R, n: Int, durations: List[Long]): (R, List[Long]) = {
       val (result, duration) = timeP(block)
@@ -32,7 +54,8 @@ object Timer {
       }
     }
     val (result, durations) = timeNRec(block, n, List())
-    log.info(s"Average execution time after $n executions: ${Duration(durations.sum * 1.0 / durations.length, NANOSECONDS)}")
+    val p = if (prefix.isBlank) "" else prefix + " "
+    log.info(s"${p}${if (p.isEmpty) "A" else "a"}verage execution time after $n executions: ${PrettyDuration(Duration(durations.sum * 1.0 / durations.length, NANOSECONDS))}")
     result
   }
 }
