@@ -1,7 +1,6 @@
 package com.github.netfalo.aoc2021
 
 import com.github.netfalo.aoc2021.Day9.HeatMap
-import com.github.netfalo.aoc2021.Timer.timeN
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
@@ -56,10 +55,8 @@ class Day9Spec extends AnyFlatSpec {
   }
 
   "HeatMap" should "calculate basiness level" in {
-    Day9.parseInput(example).basinness shouldBe 1134
-    timeN({
-      Day9.parseInput(exercise).basinness
-    }, 100) shouldBe 1059300
+    Day9.parseInput(example).sumBasinAreas shouldBe 1134
+    Day9.parseInput(exercise).sumBasinAreas shouldBe 1059300
   }
 
 }
