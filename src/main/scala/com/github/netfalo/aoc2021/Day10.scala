@@ -46,27 +46,21 @@ object Day10 extends Problem[Long] {
 
   override def solveFirstPart(input: String): Long =
     parseLines(input)
-      .map(x => {
-        isCorrupted(x) match {
-          case Right(c) => corruptionScore(c)
-          case _ => 0
-        }
-      })
+      .map(isCorrupted)
+      .collect {case Right(value) => corruptionScore(value) }
       .sum
 
-
-  private def complete(x: Vector[Char]): Vector[Char] = {
+  private def complete(x: Vector[Char]): Vector[Char] =
     x.foldLeft(Vector[Char]())((acc, n) => acc.appended(pairs(n)))
-  }
 
-  val completionScore: Map[Char, Long => Long] = Map(
-    ')' -> (x => x * 5 + 1),
-    ']' -> (x => x * 5 + 2),
-    '}' -> (x => x * 5 + 3),
-    '>' -> (x => x * 5 + 4),
+  val completionScore: Map[Char, Int] = Map(
+    ')' -> 1,
+    ']' -> 2,
+    '}' -> 3,
+    '>' -> 4,
   )
 
-  private def scoreCompletion(x: Vector[Char]): Long = x.foldLeft(0L)((acc, n) => completionScore(n)(acc))
+  private def scoreCompletion(x: Vector[Char]): Long = x.foldLeft(0L)((acc, n) => completionScore(n) + (acc * 5))
 
   override def solveSecondPart(input: String): Long = {
     val completionScores = parseLines(input)

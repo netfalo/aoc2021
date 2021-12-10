@@ -20,11 +20,11 @@ object Day6 extends Problem[Long] {
     LazyList
       .from(0)
       .take(n)
-      .foldLeft(numberOfFishes)(simulateDay)
+      .foldLeft(numberOfFishes) { case (acc, _) => simulateDay(acc) }
       .sum
   }
 
-  private def simulateDay(acc: Vector[Long], day: Int): Vector[Long] = {
+  private def simulateDay(acc: Vector[Long]): Vector[Long] = {
     val newBorn = acc.head
     val notPregnant = acc
       .tail
