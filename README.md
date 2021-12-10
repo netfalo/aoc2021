@@ -15,3 +15,4 @@ Execution times average for 1000 execution
 | 7   | 26ms 326us 937ns  | 37ms 931us 389ns |
 | 8   | 2ms 130us 452ns   | 4ms 462us 205ns  |
 | 9   | 2ms 449us 226ns   | 15ms 634us 706ns |
+| 10  | 457us 984ns       | 485us 982ns      |
