@@ -1,9 +1,10 @@
 package com.github.netfalo.aoc2021
 
 import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers
 
-class Day7Spec extends AnyFlatSpec {
+
+class Day7Spec extends AnyFlatSpec with Matchers {
   private val example = "16,1,2,0,4,2,7,1,2,14"
   private lazy val exercise = Resource("Day7.txt").content
   "First part" should "solve" in {
