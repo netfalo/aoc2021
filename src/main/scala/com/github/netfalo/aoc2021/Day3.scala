@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day3 extends Problem {
+object Day3 extends Problem[Int] {
 
   type ReportLine = IndexedSeq[Int]
   type Report = IndexedSeq[ReportLine]
@@ -23,12 +23,11 @@ object Day3 extends Problem {
     Integer.parseInt(gammaRateBin, 2)
   }
 
-  override def solveFirstPart(input: String): String = {
+  override def solveFirstPart(input: String): Int = {
     val report = parseReport(input)
     val gammaRate = calculateGammaRate(report)
 
-    (gammaRate * (gammaRate ^ (Math.pow(2, report(0).size).toInt - 1)))
-      .toString
+    gammaRate * (gammaRate ^ (Math.pow(2, report(0).size).toInt - 1))
   }
 
   def findRating(report: Report, bitCriteria: (Int, Int) => Int): Int = {
@@ -59,13 +58,12 @@ object Day3 extends Problem {
   def getCo2ScrubbingRating(report: Report): Int =
     findRating(report, (numberOfOnes, reportSize) => if (numberOfOnes >= reportSize / 2.0) 0 else 1)
 
-  override def solveSecondPart(input: String): String = {
+  override def solveSecondPart(input: String): Int = {
     val report = parseReport(input)
     val oxygenGeneratorRating = getOxygenGeneratorRating(report)
     val co2ScrubbingRating = getCo2ScrubbingRating(report)
 
-    (oxygenGeneratorRating * co2ScrubbingRating)
-      .toString
+    oxygenGeneratorRating * co2ScrubbingRating
   }
 
 }

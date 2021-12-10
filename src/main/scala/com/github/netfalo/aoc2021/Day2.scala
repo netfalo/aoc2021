@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day2 extends Problem {
+object Day2 extends Problem[Int] {
 
   sealed trait Direction
 
@@ -45,24 +45,22 @@ object Day2 extends Problem {
     }
   }
 
-  override def solveFirstPart(input: String): String = {
+  override def solveFirstPart(input: String): Int = {
     input
       .split('\n')
       .filterNot(_.isBlank)
       .map(parse)
       .foldLeft(startPosition)(_ + _)
       .size
-      .toString
   }
 
-  override def solveSecondPart(input: String): String = {
+  override def solveSecondPart(input: String): Int = {
     input
       .split('\n')
       .filterNot(_.isBlank)
       .map(parse)
       .foldLeft(startPositionWithAim)(_ + _)
       .size
-      .toString
   }
 
 }

@@ -12,16 +12,13 @@ class Day6Spec extends AnyFlatSpec {
   }
 
   "Day6" should "calculate number of fishes at day 80" in {
-    Day6.solveFirstPart(example) shouldEqual "5934"
-    Day6.solveFirstPart(exercise) shouldEqual "396210"
+    Day6.solveFirstPart(example) shouldEqual 5934
+    Day6.solveFirstPart(exercise) shouldEqual 396210
   }
 
   "Day6" should "calculate number of fishes at day 256" in {
-    Day6.solveSecondPart(example) shouldEqual "26984457539"
-
-    Timer.timeN({
-      Day6.solveSecondPart(exercise)
-    }, 100) shouldEqual "1770823541496"
+    Day6.solveSecondPart(example) shouldEqual 26984457539L
+    Day6.solveSecondPart(exercise) shouldEqual 1770823541496L
   }
 
 }

@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day6 extends Problem {
+object Day6 extends Problem[Long] {
 
   def parseInput(input: String): Vector[Long] = {
     input.split(',')
@@ -10,13 +10,11 @@ object Day6 extends Problem {
       .foldLeft(Vector.fill(9)(0L))((acc, n) => acc.updated(n._1, n._2))
   }
 
-  override def solveFirstPart(input: String): String =
+  override def solveFirstPart(input: String): Long =
     numberOfFishesAfterDays(parseInput(input), 80)
-      .toString
 
-  override def solveSecondPart(input: String): String =
+  override def solveSecondPart(input: String): Long =
     numberOfFishesAfterDays(parseInput(input), 256)
-      .toString
 
   private def numberOfFishesAfterDays(numberOfFishes: Vector[Long], n: Int): Long = {
     LazyList

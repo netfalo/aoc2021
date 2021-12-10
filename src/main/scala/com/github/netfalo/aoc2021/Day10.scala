@@ -3,7 +3,7 @@ package com.github.netfalo.aoc2021
 import scala.annotation.tailrec
 import scala.util.Either
 
-object Day10 extends Problem {
+object Day10 extends Problem[Long] {
   def parseLines(example: String): Seq[String] =
     example
       .split('\n')
@@ -44,7 +44,7 @@ object Day10 extends Problem {
     '>' -> 25137
   )
 
-  override def solveFirstPart(input: String): String =
+  override def solveFirstPart(input: String): Long =
     parseLines(input)
       .map(x => {
         isCorrupted(x) match {
@@ -53,7 +53,6 @@ object Day10 extends Problem {
         }
       })
       .sum
-      .toString
 
 
   private def complete(x: Vector[Char]): Vector[Char] = {
@@ -69,13 +68,12 @@ object Day10 extends Problem {
 
   private def scoreCompletion(x: Vector[Char]): Long = x.foldLeft(0L)((acc, n) => completionScore(n)(acc))
 
-  override def solveSecondPart(input: String): String = {
+  override def solveSecondPart(input: String): Long = {
     val completionScores = parseLines(input)
       .map(isCorrupted)
       .collect {case Left(value) => scoreCompletion(complete(value))}
       .sorted
 
     completionScores(completionScores.length / 2)
-      .toString
   }
 }

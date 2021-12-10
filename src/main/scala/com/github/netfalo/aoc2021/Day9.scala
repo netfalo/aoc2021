@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day9 extends Problem {
+object Day9 extends Problem[Int] {
 
   case class HeatMap(rows: Vector[Vector[Int]]) {
     private val mapHeight = rows.length
@@ -55,9 +55,9 @@ object Day9 extends Problem {
     HeatMap(rows)
   }
 
-  override def solveFirstPart(input: String): String =
-    parseInput(input).totalRiskLevel.toString
+  override def solveFirstPart(input: String): Int =
+    parseInput(input).totalRiskLevel
 
-  override def solveSecondPart(input: String): String =
-    parseInput(input).basinness().toString
+  override def solveSecondPart(input: String): Int =
+    parseInput(input).basinness()
 }

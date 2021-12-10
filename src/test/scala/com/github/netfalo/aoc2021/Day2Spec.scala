@@ -24,7 +24,7 @@ class Day2Spec  extends AnyFlatSpec with Matchers {
     Forward(2)
   )
 
-  val exercise = Resource("Day2.txt").content
+  private lazy val exercise = Resource("Day2.txt").content
 
   "The Day2 object parse" should "be apple" in {
     Day2.parse("forward 2") shouldEqual Forward(2)
@@ -35,12 +35,12 @@ class Day2Spec  extends AnyFlatSpec with Matchers {
       Day2.parse("Up 2") shouldEqual Down(2)
     }
 
-    Day2.solveFirstPart(example) shouldEqual "150"
-    Day2.solveFirstPart(exercise) shouldEqual "2272262"
+    Day2.solveFirstPart(example) shouldEqual 150
+    Day2.solveFirstPart(exercise) shouldEqual 2272262
   }
 
   "The Day2 object second problem" should "be second" in {
-    Day2.solveSecondPart(example) shouldEqual "900"
-    Day2.solveSecondPart(exercise) shouldEqual "2134882034"
+    Day2.solveSecondPart(example) shouldEqual 900
+    Day2.solveSecondPart(exercise) shouldEqual 2134882034
   }
 }

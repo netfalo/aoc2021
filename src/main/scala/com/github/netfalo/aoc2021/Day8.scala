@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day8 extends Problem {
+object Day8 extends Problem[Int] {
 
   case class Digit(d: Int, size: Int) {
     def &(that: Digit): Digit = {
@@ -95,15 +95,13 @@ object Day8 extends Problem {
       .toVector
   }
 
-  override def solveFirstPart(input: String): String =
+  override def solveFirstPart(input: String): Int =
     parseLines(input)
       .map(_.digits.count(x => Set(2, 3, 4, 7).contains(x.size)))
       .sum
-      .toString
 
-  override def solveSecondPart(input: String): String =
+  override def solveSecondPart(input: String): Int =
     parseLines(input)
       .map(_.content)
       .sum
-      .toString
 }

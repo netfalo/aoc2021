@@ -31,8 +31,8 @@ class Day8Spec extends AnyFlatSpec {
   }
 
   "Day8" should "solve part 1" in {
-    Day8.solveFirstPart(largeExample) shouldEqual "26"
-    Day8.solveFirstPart(exercise) shouldEqual "264"
+    Day8.solveFirstPart(largeExample) shouldEqual 26
+    Day8.solveFirstPart(exercise) shouldEqual 264
   }
 
   "Day8" should "decode" in {
@@ -40,8 +40,8 @@ class Day8Spec extends AnyFlatSpec {
   }
 
   "Day8" should "solve part 2" in {
-    Day8.solveSecondPart(largeExample) shouldEqual "61229"
-    Day8.solveSecondPart(exercise) shouldEqual "1063760"
+    Day8.solveSecondPart(largeExample) shouldEqual 61229
+    Day8.solveSecondPart(exercise) shouldEqual 1063760
   }
 
 }

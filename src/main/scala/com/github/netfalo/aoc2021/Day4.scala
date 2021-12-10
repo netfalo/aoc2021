@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day4 extends Problem {
+object Day4 extends Problem[Int] {
 
   sealed abstract class Cell(number: String) {
     def contains(that: String): Boolean = number == that
@@ -94,7 +94,7 @@ object Day4 extends Problem {
     Game(drawNumbers, boards)
   }
 
-  override def solveFirstPart(input: String): String = "???"
+  override def solveFirstPart(input: String): Int = parseGame(input).playToLoose()
 
-  override def solveSecondPart(input: String): String = "???"
+  override def solveSecondPart(input: String): Int = parseGame(input).playToLoose()
 }

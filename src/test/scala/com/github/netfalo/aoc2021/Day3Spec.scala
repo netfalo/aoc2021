@@ -24,17 +24,17 @@ class Day3Spec extends AnyFlatSpec {
 
   "the stuff" should "apple" in {
     Day3.calculateGammaRate(Day3.parseReport(example)) shouldEqual 22
-    Day3.solveFirstPart(example) shouldEqual "198"
+    Day3.solveFirstPart(example) shouldEqual 198
 
-    Day3.solveFirstPart(exercise) shouldEqual "741950"
+    Day3.solveFirstPart(exercise) shouldEqual 741950
   }
 
   "the second stuff" should "apple" in {
     Day3.getOxygenGeneratorRating(Day3.parseReport(example)) shouldEqual 23
     Day3.getCo2ScrubbingRating(Day3.parseReport(example)) shouldEqual 10
 
-    Day3.solveSecondPart(example) shouldEqual "230"
-    Day3.solveSecondPart(exercise) shouldEqual "903810"
+    Day3.solveSecondPart(example) shouldEqual 230
+    Day3.solveSecondPart(exercise) shouldEqual 903810
   }
 
 }

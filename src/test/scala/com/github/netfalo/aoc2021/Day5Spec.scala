@@ -31,8 +31,8 @@ class Day5Spec extends AnyFlatSpec {
   }
 
   "Day5" should "solve first" in {
-    Day5.solveFirstPart(example) shouldEqual "5"
-    Day5.solveFirstPart(exercise) shouldEqual "7468"
+    Day5.solveFirstPart(example) shouldEqual 5
+    Day5.solveFirstPart(exercise) shouldEqual 7468
   }
 
   "Day5" should "get all points" in {
@@ -41,8 +41,8 @@ class Day5Spec extends AnyFlatSpec {
   }
 
   "Day5" should "solve second" in {
-    Day5.solveSecondPart(example) shouldEqual "12"
-    Day5.solveSecondPart(exercise) shouldEqual "22364"
+    Day5.solveSecondPart(example) shouldEqual 12
+    Day5.solveSecondPart(exercise) shouldEqual 22364
   }
 
 }

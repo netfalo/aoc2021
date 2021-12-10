@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day5 extends Problem {
+object Day5 extends Problem[Int] {
 
   sealed trait Orientation
 
@@ -72,19 +72,17 @@ object Day5 extends Problem {
       .map(parseLine)
       .toVector
 
-  override def solveFirstPart(input: String): String =
+  override def solveFirstPart(input: String): Int =
     parseLines(input)
       .filter(line => line.orientation == Horizontal || line.orientation == Vertical)
       .flatMap(_.getAllPoints)
       .groupBy(point => point)
       .count(_._2.size > 1)
-      .toString
 
-  override def solveSecondPart(input: String): String =
+  override def solveSecondPart(input: String): Int =
     parseLines(input)
       .flatMap(_.getAllPoints)
       .groupBy(point => point)
       .count(_._2.size > 1)
-      .toString
 
 }

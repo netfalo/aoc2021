@@ -38,12 +38,12 @@ class Day10Spec extends AnyFlatSpec {
   }
 
   "Day10" should "solve first part" in {
-    Day10.solveFirstPart(example) shouldEqual "26397"
-    Day10.solveFirstPart(exerciser) shouldEqual "362271"
+    Day10.solveFirstPart(example) shouldEqual 26397
+    Day10.solveFirstPart(exerciser) shouldEqual 362271
   }
 
 
   "Day10" should "solve second part" in {
-    Day10.solveSecondPart(example) shouldEqual "288957"
-    Day10.solveSecondPart(exerciser) shouldEqual "1698395182"
+    Day10.solveSecondPart(example) shouldEqual 288957
+    Day10.solveSecondPart(exerciser) shouldEqual 1698395182
   }}
