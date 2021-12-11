@@ -10,7 +10,7 @@ object Day11 extends Problem[Long] {
     }
   }
 
-  case class Grid(octopuses: Map[Point, Int], gridWidth: Int, gridHeight: Int) {
+  case class Grid(octopuses: Map[Point, Int], neighbours: Map[Point, Seq[Point]], gridWidth: Int, gridHeight: Int) {
     override def toString: String = {
       val ys = Range(0, gridHeight)
       val xs = Range(0, gridWidth)
@@ -27,14 +27,8 @@ object Day11 extends Problem[Long] {
         val updated = octopuses
           .map {
             case (p, v) if v > 0 && v <= 9 => {
-              val activeNeighbours = List(
-                Point(-1, -1), Point(-1, 0), Point(-1, 1),
-                Point(0, -1), Point(0, 0), Point(0, 1),
-                Point(1, -1), Point(1, 0), Point(1, 1)
-              )
-                .map(_ + p)
-                .filter(_p => _p.x >= 0 && _p.y >= 0 && _p.x < gridWidth && _p.y < gridHeight)
-                .map(octopuses(_))
+              val activeNeighbours = neighbours(p)
+                .map(octopuses)
                 .count(_ > 9)
               (p, v + activeNeighbours)
             }
@@ -51,21 +45,18 @@ object Day11 extends Problem[Long] {
       runFlashes(increasedByOne)
     }
 
-    def stepN(n: Int): (Grid, Long) = {
-      @tailrec
-      def stepRec(n: Int, octopuses: Map[Point, Int], flashes: Long): (Grid, Long) = {
-        if (n == 0)
-          (Grid(octopuses, gridWidth, gridHeight), flashes)
-        else {
-          val updated = step(octopuses)
-          stepRec(n - 1, updated, flashes + updated.values.count(_ == 0))
+    def stepN(n: Int): (Map[Point, Int], Int) =
+      LazyList
+        .from(0)
+        .take(n)
+        .foldLeft((octopuses, 0)) {
+          case ((octopuses, flashes), _) =>
+            val updated = step(octopuses)
+            (updated, flashes + updated.values.count(_ == 0))
         }
-      }
 
-      stepRec(n, octopuses, 0)
-    }
-
-    def firstSynchronizedFlash(): Long = {
+    def firstSynchronizedFlash(): Long =
+    {
       @tailrec
       def rec(octopuses: Map[Point, Int], acc: Long): Long = {
         if (octopuses.values.forall(_ == 0))
@@ -77,22 +68,40 @@ object Day11 extends Problem[Long] {
     }
   }
 
+  def getNeighbours(point: Point, mapWidth: Int, mapHeight: Int): Seq[Point] = {
+    Seq(
+      Point(-1, -1), Point(-1, 0), Point(-1, 1),
+      Point(0, -1), Point(0, 0), Point(0, 1),
+      Point(1, -1), Point(1, 0), Point(1, 1)
+    )
+      .map(_ + point)
+      .filter(_p => _p.x >= 0 && _p.y >= 0 && _p.x < mapWidth && _p.y < mapHeight)
+  }
+
   def parseGrid(input: String): Grid = {
     val lines =
       input
         .split('\n')
         .filterNot(_.isBlank)
 
-    Grid(
-      lines
-        .zipWithIndex
-        .flatMap { case (line, y) => line.zipWithIndex.map {
-          case (c, x) => (Point(x, y), c - '0')
-        }
-        }.toMap, lines.head.length, lines.length)
+    val points = lines
+      .zipWithIndex
+      .flatMap { case (line, y) => line.zipWithIndex.map {
+        case (c, x) => (Point(x, y), c - '0')
+      }
+      }.toMap
+    val mapWidth = lines.head.length
+    val mapHeight = lines.length
+    val neighbours = points.keys
+      .map(point => (point, getNeighbours(point, mapWidth, mapHeight)))
+      .toMap
+
+    Grid(points, neighbours, mapWidth, mapHeight)
   }
 
-  override def solveFirstPart(input: String): Long = 0L
+  override def solveFirstPart(input: String): Long =
+    parseGrid(input).stepN(100)._2
 
-  override def solveSecondPart(input: String): Long = 0L
+  override def solveSecondPart(input: String): Long =
+    parseGrid(input).firstSynchronizedFlash()
 }

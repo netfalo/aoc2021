@@ -19,4 +19,4 @@ but it is a good indication_
 | 8   | 2ms 130us 452ns   | 4ms 462us 205ns  |
 | 9   | 2ms 449us 226ns   | 15ms 634us 706ns |
 | 10  | 457us 984ns       | 485us 982ns      |
-| 11  | 121ns             | 103ns            |
+| 11  | 13ms 487us 22ns   | 36ms 309us 852ns |
