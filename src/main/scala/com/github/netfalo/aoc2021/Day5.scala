@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day5 extends Problem[Int] {
+object Day5 extends Problem[Int, Int] {
 
   sealed trait Orientation
 

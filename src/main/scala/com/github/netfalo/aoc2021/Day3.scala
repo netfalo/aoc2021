@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day3 extends Problem[Int] {
+object Day3 extends Problem[Int, Int] {
 
   type ReportLine = IndexedSeq[Int]
   type Report = IndexedSeq[ReportLine]

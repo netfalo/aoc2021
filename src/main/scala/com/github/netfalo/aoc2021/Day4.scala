@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day4 extends Problem[Int] {
+object Day4 extends Problem[Int, Int] {
 
   sealed abstract class Cell(number: String) {
     def contains(that: String): Boolean = number == that

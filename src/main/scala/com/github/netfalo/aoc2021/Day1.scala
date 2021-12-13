@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day1 extends Problem[Int] {
+object Day1 extends Problem[Int, Int] {
   override def solveFirstPart(input: String): Int = {
     input
       .split('\n')

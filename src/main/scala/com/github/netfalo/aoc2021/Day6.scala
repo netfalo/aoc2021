@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day6 extends Problem[Long] {
+object Day6 extends Problem[Long, Long] {
 
   def parseInput(input: String): Vector[Long] = {
     input.split(',')

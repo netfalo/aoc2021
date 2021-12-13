@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day7 extends Problem[Int] {
+object Day7 extends Problem[Int, Int] {
   def parseInput(input: String): Vector[Int] = input.split(',').map(Integer.parseInt).toVector
 
   override def solveFirstPart(input: String): Int = {

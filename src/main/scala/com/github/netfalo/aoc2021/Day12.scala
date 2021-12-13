@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day12 extends Problem[Long] {
+object Day12 extends Problem[Long, Long] {
   type Graph = Map[String, Seq[String]]
 
   def parseGraph(input: String): Graph = {

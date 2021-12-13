@@ -3,7 +3,7 @@ package com.github.netfalo.aoc2021
 import scala.annotation.tailrec
 import scala.util.Either
 
-object Day10 extends Problem[Long] {
+object Day10 extends Problem[Long, Long] {
   def parseLines(example: String): Seq[String] =
     example
       .split('\n')

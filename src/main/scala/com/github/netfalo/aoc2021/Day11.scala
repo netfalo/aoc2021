@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day11 extends Problem[Long] {
+object Day11 extends Problem[Long, Long] {
 
   case class Point(x: Int, y: Int) {
     def +(that: Point): Point = {

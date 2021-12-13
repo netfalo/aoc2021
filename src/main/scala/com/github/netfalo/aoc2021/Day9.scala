@@ -1,6 +1,6 @@
 package com.github.netfalo.aoc2021
 
-object Day9 extends Problem[Int] {
+object Day9 extends Problem[Int, Int] {
 
   case class HeatMap(rows: Vector[Vector[Int]]) {
     private val mapHeight = rows.length

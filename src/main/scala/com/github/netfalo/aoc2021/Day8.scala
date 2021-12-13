@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day8 extends Problem[Int] {
+object Day8 extends Problem[Int, Int] {
 
   case class Digit(d: Int, size: Int) {
     def &(that: Digit): Digit = {
