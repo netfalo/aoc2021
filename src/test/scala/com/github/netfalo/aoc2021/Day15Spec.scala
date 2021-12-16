@@ -87,7 +87,7 @@ class Day15Spec extends AnyFlatSpec with Matchers {
 
   it should "solve second part" in {
     Day15.solveSecondPart(example) shouldEqual 315
-    Day15.solveSecondPart(exercise) shouldEqual 741
+    Day15.solveSecondPart(exercise) shouldEqual 2976
   }
 
   it should "extend" in {

@@ -85,31 +85,61 @@ object Day15 extends Problem[Int, Int] {
     rec(neighbours(from), Map(from -> 0), Map())
   }
 
+  def dijkstraShortestPath(from: Point, points: Map[Point, Int], neighbours: Map[Point, List[Point]]): (Map[Point, Int], Map[Point, Point]) = {
+    @tailrec
+    def rec(unvisited: Set[Point], distanceTo: Map[Point, Int], previousStepTo: Map[Point, Point]): (Map[Point, Int], Map[Point, Point]) = {
+      if (unvisited.size % 100 == 0)
+        println(unvisited.size)
+
+      if (unvisited.isEmpty)
+        (distanceTo, previousStepTo)
+      else {
+        val current = unvisited.minBy(distanceTo)
+        val (newDistanceTo, newPreviousStepTo) = neighbours(current)
+          .foldLeft((distanceTo, previousStepTo)) {
+            case (acc@(d, s), neighbour) if unvisited.contains(neighbour) =>
+              val cost = distanceTo(current) + points(neighbour)
+              if (cost < distanceTo(neighbour))
+                (d.updated(neighbour, cost), s.updated(neighbour, current))
+              else {
+                acc
+              }
+            case (acc, _) => acc
+          }
+        rec(unvisited - current, newDistanceTo, newPreviousStepTo)
+      }
+    }
+
+    val initialCost =
+      points
+        .map { case (point, _) => (point, Integer.MAX_VALUE) }
+        .updated(from, 0)
+
+    rec(points.keys.toSet, initialCost, Map())
+  }
+
   def shortestPathAsList(shortestPath: Map[Point, Point]): List[Point] = {
     val end = Point(shortestPath.maxBy(_._1.x)._1.x, shortestPath.maxBy(_._1.y)._1.y)
 
     @tailrec
-    def getShortestPathTo(point: Point, path: List[Point]): List[Point] = {
+    def rec(point: Point, path: List[Point]): List[Point] = {
       val newPath = path
         .prepended(point)
 
-      if (point == Point(0, 0)) {
+      if (point == end) {
         newPath
       } else {
-        getShortestPathTo(shortestPath(point), newPath)
+        rec(shortestPath(point), newPath)
       }
     }
 
-    getShortestPathTo(end, List())
+    rec(Point(0, 0), List())
   }
 
   def printMapWithShortestRoute(points: Map[Point, Int], shortestPath: Map[Point, Point]): Unit = {
     val end = Point(points.maxBy(_._1.x)._1.x, points.maxBy(_._1.y)._1.y)
 
     val shortestPathList = shortestPathAsList(shortestPath)
-
-    println(shortestPathList.tail.map(points).sum)
-
     Range.inclusive(0, end.y)
       .foreach(y => {
         Range.inclusive(0, end.x)
@@ -134,8 +164,8 @@ object Day15 extends Problem[Int, Int] {
   override def solveSecondPart(input: String): Int = {
     val (points, neighbours, start, end) = extend(parseInput(input)._1)
 
-    val (costs, paths) = calculateShortestPathFrom(start, points, neighbours)
+    val (costs, paths) = dijkstraShortestPath(end, points, neighbours)
 
-    costs(end)
+    costs(start) - points(start) + points(end)
   }
 }
