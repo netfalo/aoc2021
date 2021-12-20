@@ -22,4 +22,5 @@ but it is a good indication_
 | 11  | 13ms 487us 22ns   | 36ms 309us 852ns  |
 | 12  | 27ms 753us 346ns  | 929ms 399us 792ns |
 | 13  | 769us 698ns       | 1ms 318us 375ns   |
+| 18  | 4ms 565us 18ns    | 70ms 460us 28ns   |
 | 20  | 6ms 919us 264ns   | 366ms 862us 802ns |
