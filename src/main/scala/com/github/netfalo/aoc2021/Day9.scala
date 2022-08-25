@@ -36,7 +36,7 @@ object Day9 extends Problem[Int, Int] {
         .distinct
     }
 
-    def basinness(): Int = localMinimums
+    def sumBasinAreas(): Int = localMinimums
       .map { case (x, y) => basin(x, y) }
       .map(_.size)
       .sorted
@@ -59,5 +59,5 @@ object Day9 extends Problem[Int, Int] {
     parseInput(input).totalRiskLevel
 
   override def solveSecondPart(input: String): Int =
-    parseInput(input).basinness()
+    parseInput(input).sumBasinAreas()
 }

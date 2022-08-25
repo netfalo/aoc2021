@@ -57,9 +57,8 @@ class Day16Spec extends AnyFlatSpec with Matchers {
     parsePacket(parseInput("A0016C880162017C3686B18A3D4780"))._1.totalVersionSum shouldEqual 31
   }
 
-  it should "sum all versions in exercise" in {
-    val (packet, remainder) = parsePacket(parseInput(exercise))
-    packet.totalVersionSum shouldEqual 917
+  it should "solve first part" in {
+    solveFirstPart(exercise) shouldEqual 917
   }
 
   it should "calculate value" in {
@@ -73,7 +72,7 @@ class Day16Spec extends AnyFlatSpec with Matchers {
     parsePacket(parseInput("9C0141080250320F1802104A08"))._1.value shouldEqual 1
   }
 
-  it should "calculate value for exercise" in {
-    parsePacket(parseInput(exercise))._1.value shouldEqual 0
+  it should "solve second part" in {
+    solveSecondPart(exercise) shouldEqual 2536453523344L
   }
 }

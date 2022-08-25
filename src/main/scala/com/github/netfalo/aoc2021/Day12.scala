@@ -1,7 +1,11 @@
 package com.github.netfalo.aoc2021
 
 object Day12 extends Problem[Long, Long] {
+
   type Graph = Map[String, Seq[String]]
+
+  val END = "end"
+  val START = "start"
 
   def parseGraph(input: String): Graph = {
     input
@@ -11,7 +15,8 @@ object Day12 extends Problem[Long, Long] {
         val Array(left, right) = line.split('-')
         Array((left, right), (right, left))
       })
-      .filterNot(_._2 == "start")
+      .filterNot(_._2 == START)
+      .filterNot(_._1 == END)
       .groupBy(_._1)
       .map { case (node, neighbours) => (node, neighbours.map(_._2)) }
   }
@@ -24,7 +29,7 @@ object Day12 extends Problem[Long, Long] {
         graph(node)
           .filterNot(n => visited.contains(n) && n.toLowerCase == n)
 
-      if (node == "end")
+      if (node == END)
         Set(newRoute)
       else if (neighboursToVisit.isEmpty)
         Set()
@@ -35,7 +40,7 @@ object Day12 extends Problem[Long, Long] {
       }
     }
 
-    dfs("start", List(), Set())
+    dfs(START, List(), Set())
   }
 
   def findAllRoutesVisitOneSmallCaveTwice(graph: Graph): Set[Seq[String]] = {
@@ -46,7 +51,7 @@ object Day12 extends Problem[Long, Long] {
         graph(node)
           .filterNot(n => visited.contains(n) && n.toLowerCase == n && visitedOneSmallTwice)
 
-      if (node == "end")
+      if (node == END)
         Set(newRoute)
       else if (neighboursToVisit.isEmpty)
         Set()
@@ -57,9 +62,8 @@ object Day12 extends Problem[Long, Long] {
       }
     }
 
-    dfs("start", List(), Set(), visitedOneSmallTwice = false)
+    dfs(START, List(), Set(), visitedOneSmallTwice = false)
   }
-
 
   override def solveFirstPart(input: String): Long =
     findAllRoutesVisitSmallCavesOnce(parseGraph(input))

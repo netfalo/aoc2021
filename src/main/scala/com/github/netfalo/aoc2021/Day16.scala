@@ -2,7 +2,7 @@ package com.github.netfalo.aoc2021
 
 import scala.annotation.tailrec
 
-object Day16 extends Problem[Int, Int] {
+object Day16 extends Problem[Int, Long] {
 
   sealed abstract class Packet(version: Int, typeId: Int) {
     def totalVersionSum: Int = ???
@@ -53,7 +53,7 @@ object Day16 extends Problem[Int, Int] {
       if (content(0).value == content(1).value) 1
       else 0
   }
-  
+
   def version(n: String): Int = Integer.parseInt(n.take(3), 2)
 
   def typeId(n: String): Int = Integer.parseInt(n.slice(3, 6), 2)
@@ -137,7 +137,15 @@ object Day16 extends Problem[Int, Int] {
       .mkString
   }
 
-  override def solveFirstPart(input: String): Int = ???
+  override def solveFirstPart(input: String): Int = {
+    val (packet, _) = parsePacket(parseInput(input))
 
-  override def solveSecondPart(input: String): Int = ???
+    packet.totalVersionSum
+  }
+
+  override def solveSecondPart(input: String): Long = {
+    val (packet, _) = parsePacket(parseInput(input))
+
+    packet.value
+  }
 }
